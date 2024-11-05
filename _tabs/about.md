@@ -4,5 +4,4 @@ icon: fas fa-info-circle
 order: 4
 ---
 
-> Add Markdown syntax content to file `_tabs/about.md`{: .filepath } and it will show up on this page.
-{: .prompt-tip }
+My name is Anandha Krishnan, I'm a software engineer living in Kerala, India. I am planning to share my learnings in tech through this blog of which most would be about [Ruby](https://www.ruby-lang.org/en/) and [Ruby on Rails](https://rubyonrails.org/). I currently work as a software engineer at BigBinary.
