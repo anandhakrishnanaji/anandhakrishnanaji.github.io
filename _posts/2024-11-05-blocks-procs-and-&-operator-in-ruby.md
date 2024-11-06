@@ -120,7 +120,8 @@ doubler = Proc.new { |x| x * 2 }
 numbers.map(&doubler) # [2, 4, 6]
 ```
 
-## `to_proc`
+## to_proc
+
 We understood that **&** converts Proc to Block and vice versa. But that doesn't explain how this statement works.
 
 ```ruby
