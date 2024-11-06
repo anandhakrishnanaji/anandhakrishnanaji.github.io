@@ -19,9 +19,9 @@ end
 
 say_something do
   puts "hello"
-end                  # => hello
+end                  # >> hello
 
-say_something { puts "hello" } # => hello
+say_something { puts "hello" } # >> hello
 
 say_something # => nil
 ```
@@ -38,7 +38,7 @@ Blocks cannot be stored in a variable directly because they are not objects. One
 
 ```ruby
 my_proc = Proc.new { |x| puts "hello #{x}" }
-my_proc.call(5) # => hello 5
+my_proc.call(5) # >> hello 5
 ```
 
 We use the `call` method on `my_proc` to execute its code block. Any arguments passed in to the `call` method are passed as arguments to the block.
@@ -57,8 +57,8 @@ hindi_hello = Proc.new { puts "namaste" }
 say_something(english_hello, hindi_hello)
 
 # OUTPUT
-# hello
-# namaste
+# >> hello
+# >> namaste
 ```
 
 ## Conversion between Procs and Blocks
@@ -72,7 +72,7 @@ def say_something(&speak)
   speak.call
 end
 
-say_something { puts "hello" }
+say_something { puts "hello" } # >> hello
 ```
 **&** operator converts the block passed into the `say_something` method into a proc and stores it in the `speak` variable.
 
@@ -87,7 +87,7 @@ end
 
 my_proc = Proc.new { puts "hello" }
 
-say_something(&my_proc)
+say_something(&my_proc) # >> hello
 ```
 
 **&** operator converts the `Proc` object `my_proc` into a block which is accepted by the `say_something` method.
@@ -101,7 +101,7 @@ end
 
 my_proc = Proc.new { puts "hello" }
 
-say_something(&my_proc)
+say_something(&my_proc) # >> hello
 ```
 
 Here, a `Proc` object `my_proc` is converted to a block and passed to `say_something` method, which accepts the block, converts it to proc and store it in the `speak` variable.
@@ -114,10 +114,10 @@ One point to note is that **&** only works within the context of a method call o
 numbers = [1, 2, 3]
 
 # Double the numbers in the array
-numbers.map { |x| x * 2 } # [2, 4, 6]
+numbers.map { |x| x * 2 } # => [2, 4, 6]
 
 doubler = Proc.new { |x| x * 2 }
-numbers.map(&doubler) # [2, 4, 6]
+numbers.map(&doubler) # => [2, 4, 6]
 ```
 
 ## to_proc
@@ -125,10 +125,10 @@ numbers.map(&doubler) # [2, 4, 6]
 We understood that **&** converts Proc to Block and vice versa. But that doesn't explain how this statement works.
 
 ```ruby
-["ant", "bat"].map(&:upcase) # ["ANT", "BAT"]
+["ant", "bat"].map(&:upcase) # => ["ANT", "BAT"]
 ```
 
-Here we are calling **&** operator on a Symbol object, but how can a `Symbol` object be converted to a block ?. To understand this, we need to dig a bit deeper and understand what **&** does under the hood.
+Here we are calling **&** operator on a `Symbol` object, but how can a `Symbol` object be converted to a block ?. To understand this, we need to dig a bit deeper and understand what **&** does under the hood.
 
 Before converting to a block, **&** operator calls `to_proc` method on the object, in our case we have a `Symbol` object. `Symbol` class defines a `to_proc` method in it. Here's a sample implementation of the `to_proc` method in the `Symbol` class to get an idea of what it does on the background.
 
@@ -166,7 +166,7 @@ end
 
 method_object = method(:append_hello) # Creates a Method object from the method
 
-["ant", "bat"].map(&method_object) # ["hello ant!", "hello bat!"]
+["ant", "bat"].map(&method_object) # => ["hello ant!", "hello bat!"]
 ```
 
 Sample implementation of `to_proc` method in the `Method` class.
@@ -191,17 +191,17 @@ class String
   end
 end
 
-["ant", "bat"].map(&"upcase") # ["ANT", "BAT"]
+["ant", "bat"].map(&"upcase") # => ["ANT", "BAT"]
 
 method_name = "capitalize"
 
-["ant", "bat"].map(&method_name) # ["Ant", "Bat"]
+["ant", "bat"].map(&method_name) # => ["Ant", "Bat"]
 ```
 
 Another gotcha is that the **&** doesn't only support literals and variables, but it can also be used with expressions that return an object that supports `to_proc` method.
 
 ```ruby
-["ant", "bat"].map(&("up" + "case").to_sym) # ["ANT", "BAT"]
+["ant", "bat"].map(&("up" + "case").to_sym) # => ["ANT", "BAT"]
 ```
 
 ## Conclusion
