@@ -221,3 +221,6 @@ The **&** operator is the bridge between blocks and procs, converting one into t
 The `to_proc` method provides an elegant mechanism for transforming objects into callable procs, and with this understanding, you can now explore extending this functionality to your custom classes. By providing a `to_proc` method in your own classes, you can leverage the & operator in creative and useful ways, further embracing Ruby’s expressive syntax.
 
 This exploration opens up new possibilities for you to write more concise and flexible Ruby code, especially when dealing with enumerable methods and functional patterns.
+
+## Sources
+- [Programming Ruby 3.3: The Pragmatic Programmers Guide](https://pragprog.com/titles/ruby5/programming-ruby-3-3-5th-edition/)
