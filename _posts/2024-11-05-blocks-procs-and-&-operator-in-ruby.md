@@ -152,7 +152,7 @@ class Symbol
 end
 ```
 
-So, in `["ant", "bat"].map(&:upcase)`, **&** operator calls the `to_proc` method defined in `Symbol` class which returns a Proc object which is then converted into a block for passing into the `map` method which accepts a block. `map` passes each of the strings from the array into the Block which calls the `send` method on the string with `:upcase` as the argument, which dynamically invokes the `upcase` method of the string.
+So, in `["ant", "bat"].map(&:upcase)`, **&** operator calls the `to_proc` method defined in `Symbol` class which returns a Proc object which is then converted into a block for passing into the `map` method which accepts a block. `map` passes each of the strings from the array into the Block which calls the `public_send` method on the string with `:upcase` as the argument, which dynamically invokes the `upcase` method of the string. `map` just passes the element to the block, so `args`, `kwargs`, and `block` are not present for this example.
 
 Now you might think, if **&** calls the `to_proc` method, then it must be defined in the Proc object too. Yes, we have the `to_proc` method defined for Proc objects as well. In the case of Procs `to_proc` method returns itself as it is already a proc and there is no need for a conversion.
 
