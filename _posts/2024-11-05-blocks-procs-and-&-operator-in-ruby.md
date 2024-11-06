@@ -39,6 +39,11 @@ Blocks cannot be stored in a variable directly because they are not objects. One
 ```ruby
 my_proc = Proc.new { |x| puts "hello #{x}" }
 my_proc.call(5) # >> hello 5
+
+# A more concise way to create a new proc object is
+
+my_proc = proc { |x| puts "hello #{x}"}
+my_proc.call(5) # >> hello 5
 ```
 
 We use the `call` method on `my_proc` to execute its code block. Any arguments passed in to the `call` method are passed as arguments to the block.
@@ -51,8 +56,8 @@ def say_something(english_hello, hindi_hello)
   hindi_hello.call
 end
 
-english_hello = Proc.new { puts "hello" }
-hindi_hello = Proc.new { puts "namaste" }
+english_hello = proc { puts "hello" }
+hindi_hello = proc { puts "namaste" }
 
 say_something(english_hello, hindi_hello)
 
@@ -76,6 +81,9 @@ say_something { puts "hello" } # >> hello
 ```
 **&** operator converts the block passed into the `say_something` method into a proc and stores it in the `speak` variable.
 
+> Note: `block.call` used to create a Proc object, but since Ruby 2.6 it has been optimized to not create a Proc object thus enhancing the performance.
+{: .prompt-info }
+
 ### Proc to Block
 
 Sometimes we may have a proc object with use that we would like to pass into a method that accepts a block. The same **&** operator comes to the rescue here. Let's see how.
@@ -85,7 +93,7 @@ def say_something
   yield if block_given?
 end
 
-my_proc = Proc.new { puts "hello" }
+my_proc = proc { puts "hello" }
 
 say_something(&my_proc) # >> hello
 ```
@@ -99,7 +107,7 @@ def say_something(&speak)
   speak.call
 end
 
-my_proc = Proc.new { puts "hello" }
+my_proc = proc { puts "hello" }
 
 say_something(&my_proc) # >> hello
 ```
@@ -116,7 +124,7 @@ numbers = [1, 2, 3]
 # Double the numbers in the array
 numbers.map { |x| x * 2 } # => [2, 4, 6]
 
-doubler = Proc.new { |x| x * 2 }
+doubler = proc { |x| x * 2 }
 numbers.map(&doubler) # => [2, 4, 6]
 ```
 
@@ -139,7 +147,7 @@ Before converting to a block, **&** operator calls `to_proc` method on the objec
 class Symbol
   # STUFF...
   def to_proc
-    Proc.new { |obj| obj.send(self) } # self here represents the Symbol object (:upcase)
+    proc { |obj, *args, **kwargs, &block| obj.public_send(self, *args, **kwargs, &block) } # self here represents the Symbol object (:upcase)
   end
 end
 ```
@@ -175,7 +183,7 @@ Sample implementation of `to_proc` method in the `Method` class.
 class Method
   # STUFF...
   def to_proc
-    Proc.new { |*args, **kwargs, &block| self.call(*args, **kwargs, &block) }
+    proc { |*args, **kwargs, &block| self.call(*args, **kwargs, &block) }
   end
 end
 ```
