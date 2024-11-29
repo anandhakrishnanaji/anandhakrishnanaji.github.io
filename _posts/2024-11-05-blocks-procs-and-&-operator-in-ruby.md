@@ -216,7 +216,7 @@ Another gotcha is that the **&** doesn't only support literals and variables, bu
 
 In this post, we've explored the concepts of blocks, procs, and the **&** operator in Ruby, explaining how they work and interact with one another. Blocks are an integral part of Ruby and offer a flexible way to pass chunks of code to methods. However, blocks are not objects, and thus, we rely on Procs to treat them as first-class objects.
 
-The **&** operator is the bridge between blocks and procs, converting one into the other when necessary. We also learned how **&** works with Symbol, Proc, and Method objects by invoking the `to_proc` method, enabling powerful and concise enumerations like array.map(&:upcase).
+The **&** operator is the bridge between blocks and procs, converting one into the other when necessary. We also learned how **&** works with Symbol, Proc, and Method objects by invoking the `to_proc` method, enabling powerful and concise enumerations like `array.map(&:upcase)`.
 
 The `to_proc` method provides an elegant mechanism for transforming objects into callable procs, and with this understanding, you can now explore extending this functionality to your custom classes. By providing a `to_proc` method in your own classes, you can leverage the & operator in creative and useful ways, further embracing Ruby’s expressive syntax.
 
