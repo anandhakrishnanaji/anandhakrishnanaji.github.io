@@ -75,4 +75,4 @@ The main reason for limiting the length of buf is for efficiency. And almost all
 Long shebangs can cause issues because the kernel typically only reads the first 256 (or 512 in the case of macOS) bytes of the file to determine its format. This buffer size limitation ensures efficient handling of files without unnecessary overhead. When the shebang is too long, the kernel might not correctly identify the interpreter, leading to errors."
 
 ## Sources
-- [cpu.land](cpu.land)
+- [cpu.land](https://cpu.land/)
